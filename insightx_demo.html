@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InsightX Demo Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Space Grotesk', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            dark: '#0F172A',
+                            accent: '#3B82F6',
+                            purple: '#8B5CF6'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #0F172A; color: white; }
+        .glass {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .neon-glow {
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+        }
+    </style>
+</head>
+<body class="antialiased min-h-screen flex flex-col">
+    <!-- Navbar -->
+    <nav class="glass sticky top-0 z-50 border-b border-white/10 px-6 py-4 flex justify-between items-center">
+        <div class="flex items-center gap-2">
+            <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-cyan-400 to-blue-600 flex items-center justify-center text-white font-bold">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+            </div>
+            <span class="font-display font-bold text-xl tracking-tight">InsightX <span class="text-xs opacity-50 font-sans font-normal border border-white/20 rounded px-1.5 py-0.5 ml-1">DEMO</span></span>
+        </div>
+        <button class="bg-white/10 hover:bg-white/20 text-sm font-semibold px-4 py-2 rounded-lg transition-colors border border-white/10">
+            Upload Data
+        </button>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="flex-1 p-6 md:p-10 max-w-6xl mx-auto w-full">
+        
+        <header class="mb-10 text-center">
+            <h1 class="text-4xl md:text-5xl font-display font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-white via-blue-100 to-gray-400">
+                Turn Data into Decisions
+            </h1>
+            <p class="text-gray-400 max-w-2xl mx-auto">
+                Experience the power of auto-generated analytics. This interactive demo visualizes a sample sales dataset instantly.
+            </p>
+        </header>
+
+        <!-- Dashboard Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <!-- KPI 1 -->
+            <div class="glass p-6 rounded-2xl relative overflow-hidden group">
+                <div class="absolute top-0 right-0 w-24 h-24 bg-blue-500/10 rounded-full blur-2xl -mr-10 -mt-10 transition-all group-hover:bg-blue-500/20"></div>
+                <h3 class="text-gray-400 text-sm font-medium uppercase tracking-wider mb-1">Total Revenue</h3>
+                <div class="flex items-end gap-2">
+                    <span class="text-3xl font-display font-bold">$124,500</span>
+                    <span class="text-green-400 text-sm font-bold bg-green-400/10 px-1.5 py-0.5 rounded mb-1">↑ 12.5%</span>
+                </div>
+            </div>
+            
+            <!-- KPI 2 -->
+            <div class="glass p-6 rounded-2xl relative overflow-hidden group">
+                <div class="absolute top-0 right-0 w-24 h-24 bg-purple-500/10 rounded-full blur-2xl -mr-10 -mt-10 transition-all group-hover:bg-purple-500/20"></div>
+                <h3 class="text-gray-400 text-sm font-medium uppercase tracking-wider mb-1">Active Users</h3>
+                <div class="flex items-end gap-2">
+                    <span class="text-3xl font-display font-bold">1,840</span>
+                    <span class="text-green-400 text-sm font-bold bg-green-400/10 px-1.5 py-0.5 rounded mb-1">↑ 8.2%</span>
+                </div>
+            </div>
+
+            <!-- KPI 3 -->
+            <div class="glass p-6 rounded-2xl relative overflow-hidden group">
+                <div class="absolute top-0 right-0 w-24 h-24 bg-pink-500/10 rounded-full blur-2xl -mr-10 -mt-10 transition-all group-hover:bg-pink-500/20"></div>
+                <h3 class="text-gray-400 text-sm font-medium uppercase tracking-wider mb-1">Avg. Order</h3>
+                <div class="flex items-end gap-2">
+                    <span class="text-3xl font-display font-bold">$345</span>
+                    <span class="text-gray-500 text-sm font-bold bg-white/5 px-1.5 py-0.5 rounded mb-1">− 1.4%</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chart Section -->
+        <div class="glass p-6 rounded-2xl border border-white/10 shadow-2xl shadow-black/50">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-lg font-semibold flex items-center gap-2">
+                    <span class="w-2 h-6 bg-gradient-to-b from-cyan-400 to-blue-600 rounded-full"></span>
+                    Revenue Trend (Q3 2023)
+                </h3>
+                <select class="bg-black/30 border border-white/10 rounded-lg text-sm px-3 py-1 text-gray-300 focus:outline-none focus:border-blue-500">
+                    <option>Last 30 Days</option>
+                    <option>Last Quarter</option>
+                    <option>YTD</option>
+                </select>
+            </div>
+            <div class="relative h-80 w-full">
+                <canvas id="revenueChart"></canvas>
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        // Sample Data
+        const rawData = [
+            { date: 'Sep 01', value: 4200 },
+            { date: 'Sep 05', value: 4800 },
+            { date: 'Sep 10', value: 3900 },
+            { date: 'Sep 15', value: 6200 },
+            { date: 'Sep 20', value: 5800 },
+            { date: 'Sep 25', value: 7100 },
+            { date: 'Sep 30', value: 8400 },
+            { date: 'Oct 05', value: 7900 },
+            { date: 'Oct 10', value: 9200 },
+            { date: 'Oct 15', value: 10500 },
+        ];
+
+        // Chart Configuration
+        const ctx = document.getElementById('revenueChart').getContext('2d');
+        
+        // Gradient fill
+        const gradient = ctx.createLinearGradient(0, 0, 0, 400);
+        gradient.addColorStop(0, 'rgba(59, 130, 246, 0.5)'); // Blue start
+        gradient.addColorStop(1, 'rgba(59, 130, 246, 0)');   // Transparent end
+
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: rawData.map(d => d.date),
+                datasets: [{
+                    label: 'Revenue ($)',
+                    data: rawData.map(d => d.value),
+                    borderColor: '#60A5FA', // Blue-400
+                    backgroundColor: gradient,
+                    borderWidth: 3,
+                    pointBackgroundColor: '#1E40AF',
+                    pointBorderColor: '#fff',
+                    pointBorderWidth: 2,
+                    pointRadius: 4,
+                    pointHoverRadius: 6,
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        backgroundColor: 'rgba(15, 23, 42, 0.9)',
+                        titleColor: '#fff',
+                        bodyColor: '#cbd5e1',
+                        borderColor: 'rgba(255,255,255,0.1)',
+                        borderWidth: 1,
+                        padding: 12,
+                        displayColors: false,
+                        callbacks: {
+                            label: function(context) {
+                                return '$ ' + context.parsed.y.toLocaleString();
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        grid: {
+                            color: 'rgba(255, 255, 255, 0.05)',
+                            borderColor: 'transparent'
+                        },
+                        ticks: {
+                            color: '#94a3b8'
+                        }
+                    },
+                    y: {
+                        grid: {
+                            color: 'rgba(255, 255, 255, 0.05)',
+                            borderColor: 'transparent'
+                        },
+                        ticks: {
+                            color: '#94a3b8',
+                            callback: function(value) {
+                                return '$' + value / 1000 + 'k';
+                            }
+                        }
+                    }
+                },
+                interaction: {
+                    intersect: false,
+                    mode: 'index',
+                },
+            }
+        });
+    </script>
+</body>
+</html>

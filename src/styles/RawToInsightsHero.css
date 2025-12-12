@@ -1,0 +1,51 @@
+
+.hero-wrapper {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+}
+
+.hero-particle {
+  pointer-events: none;
+  z-index: 1;
+}
+
+.hero-content-layer {
+  position: relative;
+  z-index: 10;
+}
+
+.ix-no-scroll { 
+  overflow: hidden !important; 
+  padding-right: 8px; 
+}
+
+.hero-glass-card { 
+  backdrop-filter: blur(12px); 
+  -webkit-backdrop-filter: blur(12px); 
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.36); 
+  z-index: 20;
+}
+
+.glow-point { 
+  filter: drop-shadow(0 0 8px rgba(34,211,238,0.6)); 
+}
+
+/* Anti-Overlap Container */
+.anti-overlap-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+@media (max-width: 1024px) {
+  .hero-content {
+    align-items: center;
+    text-align: center;
+  }
+  
+  .hero-subheadline {
+    margin-left: auto;
+    margin-right: auto;
+  }
+}

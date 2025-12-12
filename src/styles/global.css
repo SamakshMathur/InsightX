@@ -1,0 +1,152 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Universal Spacing Engine */
+  --spacing-xs: 0.5rem;    /* 8px */
+  --spacing-sm: 1.5rem;    /* 24px */
+  --spacing-md: 2rem;      /* 32px */
+  --spacing-lg: 3rem;      /* 48px */
+  --spacing-xl: 4rem;      /* 64px */
+  
+  /* Dynamic Gap Calculation */
+  --gap-stack: clamp(1.5rem, 4vh, 3rem);
+  --gap-grid: clamp(1.25rem, 3vw, 2.5rem);
+
+  /* Typography Clamps */
+  --font-h1: clamp(2.75rem, 6vw, 5.5rem);
+  --font-sub: clamp(1rem, 2.1vw, 1.375rem);
+
+  /* Z-Index Architecture */
+  --z-background: 0;
+  --z-particles: 1;
+  --z-content: 50;
+  --z-cta: 100;
+  --z-floating: 200;
+  --z-sticky: 500;
+  --z-modal: 1000;
+  
+  /* Dynamic Navigation Height - Default fallback */
+  --nav-height: 80px;
+}
+
+/* =========================================
+   GLOBAL COLLISION-PREVENTION ENGINE
+   ========================================= */
+
+body {
+  overflow-x: hidden;
+  width: 100%;
+  /* CRITICAL: Push content down by the height of the fixed navbar */
+  padding-top: var(--nav-height);
+  transition: padding-top 0.2s ease-out;
+}
+
+/* Ensure anchors scroll to the right place taking fixed header into account */
+section[id], h1[id], h2[id], h3[id], div[id] {
+  scroll-margin-top: calc(var(--nav-height) + 24px);
+}
+
+/* 1. Safe Stack: Vertical layout that never overlaps */
+.layout-safe-stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-stack);
+  width: 100%;
+  height: auto;
+  min-height: min-content;
+  position: relative;
+  z-index: var(--z-content);
+  isolation: isolate;
+}
+
+/* 2. Safe Grid: Responsive grid that auto-wraps */
+.layout-safe-grid {
+  display: grid;
+  gap: var(--gap-grid);
+  width: 100%;
+  height: auto;
+  align-items: start;
+}
+
+/* 3. Text Safety */
+p, h1, h2, h3, h4, h5, h6, span, a, button {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  max-width: 100%;
+  position: relative;
+}
+
+/* 4. Container Auto-Expansion */
+section, .section-container {
+  height: auto !important;
+  min-height: min-content;
+  overflow: visible; 
+  padding-top: var(--spacing-lg);
+  padding-bottom: var(--spacing-lg);
+}
+
+/* 5. Protected Zones */
+.safe-zone {
+  position: relative;
+  z-index: var(--z-content);
+  isolation: isolate;
+}
+
+/* 6. CTA Protection */
+button, .cta-button {
+  z-index: var(--z-cta);
+  position: relative;
+  pointer-events: auto !important;
+  white-space: nowrap;
+}
+
+/* 7. Glass Panel Safety */
+.glass-panel {
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  height: auto;
+  min-height: min-content;
+}
+
+/* Animations */
+@keyframes megaSlideDown {
+  from { opacity: 0; transform: translate(-50%, -10px); }
+  to { opacity: 1; transform: translate(-50%, 0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideInFromTop {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.2s ease-out forwards;
+}
+
+.animate-slide-down {
+  animation: slideInFromTop 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 1024px) {
+  :root {
+    --spacing-lg: 2.5rem;
+    --gap-stack: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  :root {
+    --spacing-lg: 2rem;
+    --gap-stack: 1.5rem;
+  }
+}
